@@ -22,5 +22,6 @@
         "@babel/preset-env": "^7.16.11",
         "nodemon": "^2.0.15"
     },
+    // Nodejs에서 ES6방식의 import를 쓰려면 필요함.
     "type": "module"
 }
