@@ -76,8 +76,6 @@ fetch('http://34.22.74.213:5000/api' + '/product', { credential: false })
                 productPrice
             );
 
-            console.log(productElement);
-
             productElement.addEventListener('click', function (e) {
                 e.preventDefault();
                 // 클릭 이벤트가 발생한 요소의 data-id 속성 값을 가져옵니다.
@@ -90,6 +88,7 @@ fetch('http://34.22.74.213:5000/api' + '/product', { credential: false })
     })
     .catch((error) => console.error(error));
 
+    // 제이쿼리 플러그인인 듯 한데 왜 함수가 아니라고 error가 뜨는가
 $('.carousel').slick({
     dots: true,
     infinite: true,

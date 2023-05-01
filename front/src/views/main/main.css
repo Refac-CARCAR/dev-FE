@@ -1,5 +1,5 @@
 body {
-  height: fit-content;
+  height: fit-content;    // 컨텐츠 height = body height
   /*overflow-x: hidden;*/
 }
 
@@ -10,6 +10,7 @@ main {
   margin-top: 114px;
   background-color: #eeeeee;
 }
+// html에 없음
 main .main-text {
   position: absolute;
   top: 20%;
@@ -18,16 +19,18 @@ main .main-text {
   font-size: 30px;
 }
 main .carousel {
-  overflow-x: hidden;
+  overflow-x: hidden;   // 너비가 넘어가는 것은 안 보이게 설정
 }
+
 main .carousel .page {
   width: 1270px;
   height: 500px;
-  margin: 0 auto;
+  margin: 0 auto;   // 페이지 기준 중앙정렬
   background-color: #eeeeee;
   color: #eeeeee;
   cursor: pointer;
 }
+// 폴더에 없는 이미지들
 main .carousel .banner1 {
   background-image: url(img/banner_img.png);
   background-position: center;

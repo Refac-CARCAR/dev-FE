@@ -1,46 +1,49 @@
+/* 폰트 파일 없어서 일단 주석처리 */
+
 /*---fonts_pretendard---*/
-@font-face {
+
+/* @font-face {
   font-family: "pre_thin";
-  src: url("../fonts/Pretendard/Pretendard-Thin.ttf");
+  src: url("../public/fonts/Pretendard/Pretendard-Thin.ttf");
 }
 @font-face {
   font-family: "pre_light";
-  src: url("../fonts/Pretendard/Pretendard-Light.ttf");
+  src: url("../public/fonts/Pretendard/Pretendard-Light.ttf");
 }
 @font-face {
   font-family: "pre_regular";
-  src: url("../fonts/Pretendard/Pretendard-Regular.otf");
+  src: url("../public/fonts/Pretendard/Pretendard-Regular.otf");
 }
 @font-face {
   font-family: "pre_medium";
-  src: url("../fonts/Pretendard/Pretendard-Medium.otf");
+  src: url("../public/fonts/Pretendard/Pretendard-Medium.otf");
 }
 @font-face {
   font-family: "pre_semibold";
-  src: url("../fonts/Pretendard/Pretendard-SemiBold.ttf");
+  src: url("../public/fonts/Pretendard/Pretendard-SemiBold.ttf");
 }
 @font-face {
   font-family: "pre_bold";
-  src: url("../fonts/Pretendard/Pretendard-Bold.ttf");
-}
+  src: url("../public/fonts/Pretendard/Pretendard-Bold.ttf");
+} */
 
 /*---fonts_helvetica---*/
-@font-face {
+/* @font-face {
   font-family: "helvetica";
-  src: url("../fonts/HelveticaNeueLTPro/Helvetica.ttf");
+  src: url("../public/fonts/HelveticaNeueLTPro/Helvetica.ttf");
 }
 @font-face {
   font-family: "hel_exlight";
-  src: url("../fonts/HelveticaNeueLTPro/HelveticaNeueLTPro-LtEx.otf");
+  src: url("../public/fonts/HelveticaNeueLTPro/HelveticaNeueLTPro-LtEx.otf");
 }
 @font-face {
   font-family: "hel_exmedium";
-  src: url("../fonts/HelveticaNeueLTPro/HelveticaNeueLTPro-MdEx.otf");
+  src: url("../public/fonts/HelveticaNeueLTPro/HelveticaNeueLTPro-MdEx.otf");
 }
 @font-face {
   font-family: "hel_exheavy";
-  src: url("../fonts/HelveticaNeueLTPro/HelveticaNeueLTPro-BlkEx.otf");
-}
+  src: url("../public/fonts/HelveticaNeueLTPro/HelveticaNeueLTPro-BlkEx.otf");
+} */
 
 /*---reset---*/
 * {
