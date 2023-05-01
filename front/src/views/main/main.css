@@ -1,5 +1,6 @@
 body {
-  height: fit-content;    // 컨텐츠 height = body height
+  /* 컨텐츠 height = body height */
+  height: fit-content;   
   /*overflow-x: hidden;*/
 }
 
@@ -10,7 +11,7 @@ main {
   margin-top: 114px;
   background-color: #eeeeee;
 }
-// html에 없음
+/* html에 없음 */
 main .main-text {
   position: absolute;
   top: 20%;
@@ -19,18 +20,20 @@ main .main-text {
   font-size: 30px;
 }
 main .carousel {
-  overflow-x: hidden;   // 너비가 넘어가는 것은 안 보이게 설정
+  /* 너비가 넘어가는 것은 안 보이게 설정 */
+  overflow-x: hidden;   
 }
 
 main .carousel .page {
   width: 1270px;
   height: 500px;
-  margin: 0 auto;   // 페이지 기준 중앙정렬
+  /* 페이지 기준 중앙정렬 */
+  margin: 0 auto;   
   background-color: #eeeeee;
   color: #eeeeee;
   cursor: pointer;
 }
-// 폴더에 없는 이미지들
+// 폴더에 없는 이미지들 */
 main .carousel .banner1 {
   background-image: url(img/banner_img.png);
   background-position: center;
