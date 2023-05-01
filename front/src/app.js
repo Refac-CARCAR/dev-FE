@@ -9,8 +9,6 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'views')));
 app.use(viewsRouter);
 
-app.get('/cat', (req, res) => { res.send('<img src="cat.png"/>') })
-
 app.listen(3000, () => {
   console.log('http://localhost:3000')
 })
