@@ -23,9 +23,10 @@
 
 5/2
 ------------
-1. app.js 경로 
+취소선
+1. <strike>app.js 경로 </strike>
 2. 민성님 github 권한 설정
-3. CORS & proxy
+3. <strike>CORS & proxy</strike>
 4. token 을 세션에서 꺼내오는 법
 5. fetch 에는 inclue, omit 이 있다(ture,false가 없다) 
 6. index.js에서 npm start 할 수 있게 만드는 법
