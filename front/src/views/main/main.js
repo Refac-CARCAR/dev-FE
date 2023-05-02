@@ -9,9 +9,7 @@ const addCommas = (n) => {
 const productList = document.getElementById('new_product_area');
 let productData = []; // 상품데이터 배열로 받아오기
 
-// credential: false 옵션은 무엇인가? credential: 'include' | 'same-origin' | 'omit' 밖에 못 찾음
-// https://developer.mozilla.org/ko/docs/Web/API/Fetch_API/Using_Fetch 
-fetch('http://34.22.74.213:5000/api' + '/product', { credential: false })
+fetch('http://34.22.74.213:5000/api' + '/product', { credential: 'omit' })
     .then((res) => {
         return res.json();
         //fetch로 받아온 response를 json형태로 바꿔준다.

@@ -9,11 +9,16 @@ const app = express();
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'views')));
 app.use(viewsRouter);
+// CORS 에러 방지
+app.use(cors());
+app.all('/*', function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
 
-// index.js의 port와 중복되면  충돌이 발생해서 npm start가 안 되는데 왜지?
-// Error: listen EADDRINUSE: address already in use :::3000
-// app.listen(3000, () => {
-//   console.log('http://localhost:3000')
-// })
+app.listen(3001, () => {
+  console.log('http://localhost:3001')
+})
 
 export { app };

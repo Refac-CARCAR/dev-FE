@@ -35,17 +35,17 @@ main .carousel .page {
 }
 // 폴더에 없는 이미지들 */
 main .carousel .banner1 {
-  background-image: url(img/banner_img.png);
+  background-image: url("https://yubin-carcar.s3.ap-northeast-2.amazonaws.com/main_banner.png");
   background-position: center;
   background-size: inherit;
 }
 main .carousel .banner2 {
-  background-image: url(img/banner_img.png);
+  background-image: url("https://yubin-carcar.s3.ap-northeast-2.amazonaws.com/main_banner.png");
   background-position: center;
   background-size: inherit;
 }
 main .carousel .banner3 {
-  background-image: url(img/banner_img.png);
+  background-image: url("https://yubin-carcar.s3.ap-northeast-2.amazonaws.com/main_banner.png");
   background-position: center;
   background-size: inherit;
 }

@@ -5,8 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Main</title>
+    <<<<<<< HEAD
     <link rel="stylesheet" href="../common.css" />
     <link rel="stylesheet" href="./main.css" />
+    =======
+    <link rel="stylesheet" href="../common/common.css" />
+    <link rel="stylesheet" href="./main.css" />
+    <link rel="stylesheet" href="../common/slick/slick.css" />
+    <link rel="stylesheet" href="../common/slick/slick-theme.css" />
+    >>>>>>> 73bebf43e2b4cbcd92163bcdd27a170771be0ccf
   </head>
 
   <body>
@@ -73,20 +80,11 @@
           <div class="border_bottom"></div>
         </div>
 
-        <div id="new_product_area">
-          <!--동적 html 생성 및 상품 리스트 API 호출
-                <div class="new_product">
-                    <img class="new_img" src="" alt="">
-                    <div class="new_product_info">
-                        <p class="list_name"></p>
-                        <p class="list_sub"></p>
-                        <p class="list_price"></p>
-                    </div>
-                </div>
-                -->
-        </div>
+        <!-- 최신 6개 상품 등장공간 -->
+        <div id="new_product_area"></div>
       </section>
 
+      <!-- 무엇을 위한 공간인가!? -->
       <section id="noti_area">
         <div class="sub_title">
           <p>NOTIFICATION</p>
@@ -112,12 +110,10 @@
       </section>
     </div>
 
-    <!-- 제이쿼리?? -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="../common/slick/slick.min.js"></script>
     <!-- 로드된 js파일이 모듈로써 동작하기 위해선 script 속성으로 type="module"있어야 함 -->
     <script type="module" src="./main.js"></script>
     <script type="module" src="../../app.js"></script>
-    <!-- <script type="module"></script> -->
-    <!-- ??? -->
   </body>
 </html>

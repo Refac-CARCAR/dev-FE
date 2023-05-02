@@ -1,16 +1,3 @@
-const randomId = () => {
-  return Math.random().toString(36).substring(2, 7);
-};
-
-// 이메일 형식인지 확인 (true 혹은 false 반환)
-const validateEmail = email => {
-  return String(email)
-    .toLowerCase()
-    .match(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-    );
-};
-
 // 숫자에 쉼표를 추가함. (10000 -> 10,000)
 const addCommas = n => {
   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -22,13 +9,8 @@ const convertToNumber = string => {
   return parseInt(string.replace(/(,|개|원)/g, ''));
 };
 
-// ms만큼 기다리게 함.
-const wait = ms => {
-  return new Promise(r => setTimeout(r, ms));
-};
-
 /* ------------- */
-
+/*--상품사진 넘기는 기능--*/
 $('.carousel').slick({
     dots: true,
     infinite: true,
@@ -40,16 +22,22 @@ $('.carousel').slick({
 }); 
 
 /*--productData--*/
-let productData = [];
+/** 이 아이의 존재 이유는 무엇인가 */
+const productData = [];
+/** 이 아이는 왜 먼저 선언해주는가? 전역변수로 사용하려고? 무엇을 위해?? */
 let product_id;
 
+/** product path param? 주소/api/product/:product_id */
 const link = document.location.href.split('/')[4];
 console.log(link);
 
-fetch(`http://34.22.74.213:5000/api/product/${link}`, { credential: false })
+// 메인페이지에서 클릭한 것과 연동해야 하는데...
+fetch(`http://34.22.74.213:5000/api/product/${link}`, { credential: 'omit' })
     .then(res => {
-        return res.json();
-        
+      // fetch로 받아온 response를 javascript 객체인 프로미스를 반환해줌 
+      // https://developer.mozilla.org/en-US/docs/Web/API/Response/json
+      // '메서드 이름이 json임에도 결과는 JSON이 아니라 JSON을 JavaScript 객체로 파싱한 값을 반환함'
+      return res.json();
     })
     .then((json) => {
         productData = json;
@@ -133,9 +121,15 @@ buy.addEventListener('click', function () {
 
 });
 
+
+/*--마이페이지 연결--*/
+
+// 공통된 부분이므로 일단 나중에 하자
+
 const goToMypage = document.querySelector('#goToMypage');
 const currentToken = localStorage.getItem('token');
 
+// 프론트에서 token을 가지고 관리자임을 확인하는 방법은 무엇일까?
 if (currentToken ===
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDQ5ZDNhOGMyZDFmNzgxYzVlZDIxZTciLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2ODI2OTc2MjR9.J2Z7Slgjqo_VWl66qn0aGLY-l0ejJ25nhuBtSCU90ZA'
 ) {
