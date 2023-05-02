@@ -27,9 +27,12 @@ const productData = [];
 /** 이 아이는 왜 먼저 선언해주는가? 전역변수로 사용하려고? 무엇을 위해?? */
 let product_id;
 
-/** product path param? 주소/api/product/:product_id */
+/** product path param? 주소/api/product/:product_id 
+ *  그런데 url은 위 처럼 안 뜸.. 어케함!?
+*/
 const link = document.location.href.split('/')[4];
 console.log(link);
+console.log(req.params);
 
 // 메인페이지에서 클릭한 것과 연동해야 하는데...
 fetch(`http://34.22.74.213:5000/api/product/${link}`, { credential: 'omit' })
