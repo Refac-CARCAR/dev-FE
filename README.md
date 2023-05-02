@@ -18,4 +18,14 @@
 |날짜 | 내용 |
 |:---:|:---:|
 | 5/1| main 페이지|
-| 5/2| 미정|
+| 5/2| product-detail 페이지 |
+
+
+오늘의 할 일
+1. app.js 경로
+2. 민성님 github 권한 설정
+3. CORS & proxy
+4. token 을 세션에서 꺼내오는 법
+5. fetch 에는 inclue, omit 이 있다(ture,false가 없다) 
+6. index.js에서 npm start 할 수 있게 만드는 법
+7. 안쓰는 함수들 발견하면 지워주기
