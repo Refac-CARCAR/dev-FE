@@ -21,8 +21,9 @@
 | 5/2| product-detail 페이지 |
 
 
-오늘의 할 일
-1. app.js 경로
+5/2
+------------
+1. app.js 경로 
 2. 민성님 github 권한 설정
 3. CORS & proxy
 4. token 을 세션에서 꺼내오는 법
