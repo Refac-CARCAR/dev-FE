@@ -6,22 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Product</title>
 
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../../public/css/common.css"
-    />
-    <link rel="stylesheet" type="text/css" href="./product-detail.css" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../public/slick/slick.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="../../public/slick/slick-theme.css"
-    />
+    <link rel="stylesheet" href="/common/common.css" />
+
+    <link rel="stylesheet" href="/common/slick/slick.css" />
+    <link rel="stylesheet" href="/common/slick/slick-theme.css" />
+    <link rel="stylesheet" href="/product/product-detail/product-detail.css" />
   </head>
   <body>
     <div class="nav_back">
@@ -85,13 +74,13 @@
       <div class="carousel wrap">
         <div>
           <div>
-            <img class="product_img1" src="../../img/test_img1.png" />
+            <img class="product_img1" src="" />
           </div>
         </div>
 
         <div>
           <div>
-            <img class="product_img2" src="../../img/test_img2.png" />
+            <img class="product_img2" src="" />
           </div>
         </div>
       </div>
@@ -172,11 +161,12 @@
       }
     </script>
 
-    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/common/slick/slick.min.js"></script>
     <script
-      type="text/javascript"
-      src="../../public/slick/slick.min.js"
+      type="module"
+      src="/product/product-detail/product-detail.js"
     ></script>
-    <script type="module" src="./product-detail.js"></script>
+    <script type="module" src="../app.js"></script>
   </body>
 </html>
