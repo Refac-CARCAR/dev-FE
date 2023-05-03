@@ -14,23 +14,22 @@ const __dirname = path.resolve(); // src??
 const app = express();
 
 // view 폴더에 있는 정적 파일을 사용하기 위한 코드: app.use(express.static('views'))
-// path.join(__dirname, 'views')는 무엇일까? -> CWD는 (src폴더 내 app.js) -> ./views 
-// ./views(CWD인 src폴더 내의 view 폴더)의 static files를 이용하겠다!! 라는 의미
+// path.join(__dirname, 'views')는 무엇일까? -> CWD는 (src폴더 내 app.js) -> 절대경로/views 
+// 절대경로/views(CWD인 src폴더 내의 view 폴더)의 static files를 이용하겠다!! 라는 의미
 app.use(express.static(path.join(__dirname, 'views')));
 
 app.use(viewsRouter);
 // CORS 에러 방지
 app.use(cors());
-
-// 무엇을 위한 코드인 지 유빈님께 물어보기
+// 좋은 코드 알아보기
 app.all('/*', function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   next();
 });
 
-app.listen(3001, () => {
-  console.log('http://localhost:3001')
+app.listen(3000, () => {
+  console.log('http://localhost:3000');
 })
 
 export { app };
