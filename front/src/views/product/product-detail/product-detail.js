@@ -52,7 +52,6 @@ fetch(`http://34.22.74.213:5000/api/product/${link}`, { credential: 'omit' })
   })
   .then(() => {
         /*-----비즈니스로직------*/
-    console.log(totalPrice);
     /** 수량조절 */
     function countDown() {
       /** 수량 표기 p태그 */
@@ -72,9 +71,7 @@ fetch(`http://34.22.74.213:5000/api/product/${link}`, { credential: 'omit' })
       let num = parseInt(productAmountNum.innerHTML);
       num += 1;
       productAmountNum.innerText = num;
-      console.log(num);
       totalPrice = totalPrice + productPrice;
-      console.log(totalPrice)
       document.querySelector('.total_price').innerHTML = "KRW " + addCommas(totalPrice);
     }
 
