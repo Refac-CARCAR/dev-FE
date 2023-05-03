@@ -100,7 +100,7 @@
 
           <div class="sub_description">
             <p class="maker"><!--제조사--></p>
-            <p class="shipping_fee">배송비 _ KRW 3000</p>
+            <p class="shipping_fee">배송비 _ KRW 3,000</p>
           </div>
         </div>
       </div>
@@ -136,7 +136,8 @@
         <div class="product_text_right">
           <div class="price_area">
             <p>TOTAL PRICE</p>
-            <p class="total_price">KRW 30,000</p>
+            <!-- (가격 * 수량)이 연동된 가격이 나와야 함. 고정값(X) -->
+            <p class="total_price"></p>
           </div>
           <div class="product_btn">
             <button class="add_cart_btn">Add to cart</button>
@@ -145,21 +146,6 @@
         </div>
       </div>
     </section>
-
-    <script>
-      function count(type) {
-        const productAmountNum = document.querySelector(".product_amount"); // 결과 수량
-        let num = productAmountNum.innerHTML;
-
-        if (type === "plus") {
-          num = parseInt(num) + 1;
-        } else if (type === "minus") {
-          num = parseInt(num) - 1;
-        }
-
-        productAmountNum.innerText = num;
-      }
-    </script>
 
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="/common/slick/slick.min.js"></script>

@@ -22,34 +22,52 @@ $('.carousel').slick({
 });
 
 /*--productData--*/
-let productData = [];
+// fetch 함수에서만 쓰이므로 fetch 지역변수로 써도 될 것 같은데??
+// let productData = [];
+/** 다양한 함수에서 활용되므로 전역변수로 선언 (그런데 let? 다른 상품일 경우 바뀌어야해서!)*/
 let productId;
 
+/** url에서 얻어온 product_id */
 const link = document.location.href.split('/')[4];
-console.log(link);
 
-fetch(`http://34.22.74.213:5000/api/product/${link}`, { credential: false })
+fetch(`http://34.22.74.213:5000/api/product/${link}`, { credential: 'omit' })
   .then(res => {
     return res.json();
 
   })
   .then((json) => {
-    productData = json;
+    const productData = json;
     productId = productData.product_id;
-    console.log(json);
     document.querySelector('.product_img1').src = productData.image;
     document.querySelector('.product_img2').src = productData.image;
     document.querySelector('.product_name').innerHTML = productData.name;
     document.querySelector('.product_price').innerHTML = "KRW " + addCommas(productData.price);
     document.querySelector('.main_description').innerHTML = productData.description;
     document.querySelector('.maker').innerHTML = "제조사 _ " + productData.maker;
-
+    /** TOTAL PRICE */
+    document.querySelector('.total_price').innerHTML = "KRW " + addCommas(productData.price);
   })
   .catch((error) => console.error(error));
 
 
-// 비즈니스로직
-/**수량조절*/
+/*-----비즈니스로직------*/
+/** 수량계산 */
+function countDown() {
+  const productAmountNum = document.querySelector(".product_amount"); // 결과 수량
+  let num = parseInt(productAmountNum.innerHTML);
+  // 0 이하로 내려가지 않게 설정
+  if (num <= 1) return alert('최소 수량은 1개입니다.');
+  num -= 1;
+  productAmountNum.innerText = num;
+}
+
+function countUp() {
+  const productAmountNum = document.querySelector(".product_amount");
+  let num = parseInt(productAmountNum.innerHTML);
+  num += 1;
+  productAmountNum.innerText = num;
+}
+/**수량조절??*/
 function setAmount(data) {
   const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
   cartItems.push(data);
@@ -110,7 +128,14 @@ function buyProduct(item) {
 
 
 
+
 /*--버튼클릭시--*/
+const minusBtn = document.querySelector('.cart_product_amount_count_minus');
+minusBtn.addEventListener('click', countDown);
+
+const plusBtn = document.querySelector('.cart_product_amount_count_plus');
+plusBtn.addEventListener('click', countUp);
+
 const changeBtn = document.querySelector('.amount_done');
 changeBtn.addEventListener('click', setAmount);
 
