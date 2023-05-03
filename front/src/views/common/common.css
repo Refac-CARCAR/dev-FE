@@ -4,30 +4,6 @@
 
 /* @font-face {
   font-family: "pre_thin";
-<<<<<<< HEAD:front/src/views/common.css
-  src: url("../public/fonts/Pretendard/Pretendard-Thin.ttf");
-}
-@font-face {
-  font-family: "pre_light";
-  src: url("../public/fonts/Pretendard/Pretendard-Light.ttf");
-}
-@font-face {
-  font-family: "pre_regular";
-  src: url("../public/fonts/Pretendard/Pretendard-Regular.otf");
-}
-@font-face {
-  font-family: "pre_medium";
-  src: url("../public/fonts/Pretendard/Pretendard-Medium.otf");
-}
-@font-face {
-  font-family: "pre_semibold";
-  src: url("../public/fonts/Pretendard/Pretendard-SemiBold.ttf");
-}
-@font-face {
-  font-family: "pre_bold";
-  src: url("../public/fonts/Pretendard/Pretendard-Bold.ttf");
-} */
-=======
   src: url("./fonts/Pretendard/Pretendard-Thin.ttf");
 }
 @font-face {
@@ -50,28 +26,12 @@
   font-family: "pre_bold";
   src: url("./fonts/Pretendard/Pretendard-Bold.ttf");
 }
->>>>>>> 73bebf43e2b4cbcd92163bcdd27a170771be0ccf:front/src/views/common/common.css
+
 
 /*---fonts_helvetica---*/
 /* @font-face {
   font-family: "helvetica";
-<<<<<<< HEAD:front/src/views/common.css
-  src: url("../public/fonts/HelveticaNeueLTPro/Helvetica.ttf");
-}
-@font-face {
-  font-family: "hel_exlight";
-  src: url("../public/fonts/HelveticaNeueLTPro/HelveticaNeueLTPro-LtEx.otf");
-}
-@font-face {
-  font-family: "hel_exmedium";
-  src: url("../public/fonts/HelveticaNeueLTPro/HelveticaNeueLTPro-MdEx.otf");
-}
-@font-face {
-  font-family: "hel_exheavy";
-  src: url("../public/fonts/HelveticaNeueLTPro/HelveticaNeueLTPro-BlkEx.otf");
-} */
-=======
-  src: url("./fonts/HelveticaNeueLTPro/Helvetica.ttf");
+  src: url("./fonts/HelveticaNeueLTPro/Helvetica.otf");
 }
 @font-face {
   font-family: "hel_exlight";
@@ -85,7 +45,7 @@
   font-family: "hel_exheavy";
   src: url("./fonts/HelveticaNeueLTPro/HelveticaNeueLTPro-BlkEx.otf");
 }
->>>>>>> 73bebf43e2b4cbcd92163bcdd27a170771be0ccf:front/src/views/common/common.css
+
 
 /*---reset---*/
 * {
@@ -197,8 +157,8 @@ a {
   width: 187px;
   height: fit-content;
   font-size: 34px;
-  font-family: "Helvetica83-ExtendedHeavy";
-  /*font-family: 'hel_exheavy';*/
+  /* font-family: "Helvetica83-ExtendedHeavy"; */
+  font-family: "hel_exheavy";
   color: #000000;
 }
 #logo a {

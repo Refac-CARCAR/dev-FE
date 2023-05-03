@@ -58,7 +58,7 @@ fetch('http://34.22.74.213:5000/api' + '/product', { credential: 'omit' })
                 // 클릭 이벤트가 발생한 요소의 data-id 속성 값을 가져옵니다.
                 const productId = this.getAttribute('data-id');
                 // 해당 ID로 이동합니다.
-                location.href = `http://34.22.74.213:5000/api/product/${productId}`;
+                location.href = `http://localhost:3000/product/${productId}`;
                 // 일단은 vm 사이트가 없으니 임시로 백엔드 서버로 보내겠습니다.
             });
         })
