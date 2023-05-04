@@ -39,6 +39,8 @@ fetch(`http://34.64.92.127:5000/api/product/${link}`, { credential: false })
      *  이제 바깥에서도 "productData.속성"을 사용할 수 있다.
      */
     productData = json;
+    productId = productData.product_id;
+    console.log(json);
 
     document.querySelector('.product_img1').src = productData.image;
     document.querySelector('.product_img2').src = productData.image;
@@ -46,24 +48,7 @@ fetch(`http://34.64.92.127:5000/api/product/${link}`, { credential: false })
     document.querySelector('.product_price').innerHTML = "KRW " + addCommas(productData.price);
     document.querySelector('.main_description').innerHTML = productData.description;
     document.querySelector('.maker').innerHTML = "제조사 _ " + productData.maker;
-
   })
-  .catch((error) => console.error(error));
-
-// 비즈니스로직
-
-/**장바구니에 추가*/
-const addToCart = function (item) {
-  const cartItemInfo = item;
-  cartValidate(cartItemInfo)
-    .then(result => {   // 중복물건이 없는 경우
-      const confirmed = confirm(`${result}`);
-      if (confirmed) {
-        window.location.href = `http://localhost:3000/cart`;
-      }
-    })
-    .catch(error => alert(error)); // 중복물건이 있는 경우
-}
 
 /**장바구니 중복여부 검증*/
 function cartValidate(item) {
