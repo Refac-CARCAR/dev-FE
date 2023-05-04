@@ -75,11 +75,9 @@ fetch(`http://34.22.74.213:5000/api/product/${link}`, { credential: 'omit' })
     /**장바구니 중복여부 검증*/
     function cartValidate(cartInfo) {
         return new Promise((resolve, reject) => { 
-          // productId가 아닌 cartItems로 한 뒤 
         const isCartItemExist = localStorage.getItem('productId');
         if (isCartItemExist === null) {
           //장바구니에 이 상품이 존재하지 않으면~
-          // cartInfo 값을 배열안에 key와 값으로 이루어진 객체를 구성해야할 듯... 내일 와서 해보겠습니다
           localStorage.setItem(productId, JSON.stringify(cartInfo));
           resolve('장바구니에 성공적으로 추가되었습니다.');
         } else {

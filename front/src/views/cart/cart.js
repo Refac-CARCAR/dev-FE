@@ -19,10 +19,10 @@ const addCommas = n => {
 };
 
 // 처음 페이지가 꾸려질 때 localStorage에 저장된 값을 가져온다.
+// productID는 서버에 저장된 걸 활용해야 할 듯?! 
 const products = JSON.parse(localStorage.getItem('productId')) || [];
 console.log(products);
 
-// 서버랑 통신할 필요없이 localStorage에 저장된 값을 불러와서 작성
 const itemsInCart = data => {
   /** ? */
   let html = '';
