@@ -22,21 +22,24 @@ $('.carousel').slick({
 });
 
 /*--productData--*/
-let productData = [];
-let productId;
 
 const link = document.location.href.split('/')[4];
 console.log(link);
 
-fetch(`http://34.22.74.213:5000/api/product/${link}`, { credential: false })
+/** 상위스코프에 먼저 let으로 선언해둔다 */
+let productData;
+
+fetch(`http://34.64.92.127:5000/api/product/${link}`, { credential: false })
   .then(res => {
     return res.json();
 
   })
   .then((json) => {
+    /** fetch해서 받아온 데이터를 상위스코프에 할당한다.
+     *  이제 바깥에서도 "productData.속성"을 사용할 수 있다.
+     */
     productData = json;
-    productId = productData.product_id;
-    console.log(json);
+
     document.querySelector('.product_img1').src = productData.image;
     document.querySelector('.product_img2').src = productData.image;
     document.querySelector('.product_name').innerHTML = productData.name;
@@ -47,21 +50,14 @@ fetch(`http://34.22.74.213:5000/api/product/${link}`, { credential: false })
   })
   .catch((error) => console.error(error));
 
-
 // 비즈니스로직
-/**수량조절*/
-function setAmount(data) {
-  const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
-  cartItems.push(data);
-  localStorage.setItem("cart", JSON.stringify(cartItems));
-}
 
-/**장바구니에 추기*/
-const addToCart = function (productId, amount) {
-  const cartItemInfo = { product_id: productId, amount: amount };
+/**장바구니에 추가*/
+const addToCart = function (item) {
+  const cartItemInfo = item;
   cartValidate(cartItemInfo)
     .then(result => {   // 중복물건이 없는 경우
-      const confirmed = confirm(`${result} /n 장바구니 페이지로 이동하시겠습니까?`);
+      const confirmed = confirm(`${result}`);
       if (confirmed) {
         window.location.href = `http://localhost:3000/cart`;
       }
@@ -74,21 +70,25 @@ function cartValidate(item) {
   const cartItemId = item.product_id;
   return new Promise((resolve, reject) => {
     const isCartItemExist = localStorage.getItem(cartItemId);
-    if (isCartItemExist !== null) {
-      reject('이미 장바구니에 담겨있습니다.');
-    } else {
+    if (isCartItemExist === null) {
+      //장바구니에 이 상품이 존재하지 않으면~
       localStorage.setItem(cartItemId, JSON.stringify(item));
       resolve('장바구니에 성공적으로 추가되었습니다. 페이지에서 확인하시겠습니까?');
+    } else {
+      reject('이미 장바구니에 담겨있습니다.');
     }
   });
 }
 
 /*--구매하기--*/
 function buyProduct(item) {
+  const data = [];
   const amountNum = document.querySelector('.product_amount').innerHTML;
-  const data = { product_id: item.product_id, amount: amountNum };
+  const productId = item.product_id;
 
-  fetch('http://localhost:5000/api/orders', {
+  data.push({ product_id: productId, amount: amountNum, });
+
+  fetch('http://34.64.92.127:5000/api/orders', {
     method: 'POST',
     body: JSON.stringify(data),
     headers: {
@@ -97,28 +97,25 @@ function buyProduct(item) {
   })
     .then(response => response.json())
     .then(data => {
+      /** 로그인 안했어도 주문완료? 내가 쓴 코드인지 아침에 다시 살펴보기*/
       confirm(`주문이 완료되었습니다.`);
-      window.location.href = `http://localhost:3000/ordercheck`;
-
+      window.location.href = `http://34.64.92.127:5000/api/ordercheck`;
     })
     .catch(error => console.error(error));
 }
-// Promise 객체를 생성하고
-// localStorage에 cartItemId가 있는지 없는지 확인한다
-// cartItemId값이 null이 아닌 경우 중복물건이 존재한다는 것을 의미함
-// 중복물건이 없는 경우 localStorage에 data 추가
 
 
 
 /*--버튼클릭시--*/
-const changeBtn = document.querySelector('.amount_done');
-changeBtn.addEventListener('click', setAmount);
+// const changeBtn = document.querySelector('.amount_done');
+// changeBtn.addEventListener('click', setAmount);
 
+/**장바구니에서 최대한 서버와의 통신을 줄이기 위해 상품정보를 모두 보냈습니다*/
 const addCartBtn = document.querySelector('.add_cart_btn');
-addCartBtn.addEventListener('click', addToCart);
+addCartBtn.addEventListener('click', () => addToCart(productData));
 
 const buyBtn = document.querySelector('.buy_btn');
-buyBtn.addEventListener('click', buyProduct)
+buyBtn.addEventListener('click', () => buyProduct(productData));
 
 
 /*--마이페이지 이동--*/

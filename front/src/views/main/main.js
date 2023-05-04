@@ -8,7 +8,7 @@ const addCommas = (n) => {
 const productList = document.getElementById('new_product_area');
 let productData = []; // 상품데이터 배열로 받아오기
 
-fetch('http://34.22.74.213:5000/api' + '/product', { credential: 'omit' })
+fetch('http://34.64.92.127:5000/api' + '/product', { credential: 'omit' })
     .then((res) => {
         return res.json();
         //fetch로 받아온 response를 json형태로 바꿔준다.
@@ -58,7 +58,6 @@ fetch('http://34.22.74.213:5000/api' + '/product', { credential: 'omit' })
                 const productId = this.getAttribute('data-id');
                 // 해당 ID로 이동합니다.
                 location.href = `http://localhost:3000/product/${productId}`;
-                // 일단은 vm 사이트가 없으니 임시로 백엔드 서버로 보내겠습니다.
             });
         })
     })
