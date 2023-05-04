@@ -41,6 +41,7 @@ fetch(`http://34.22.74.213:5000/api/product/${link}`, { credential: 'omit' })
     productId = productData.product_id;
     totalPrice = productData.price;
     productPrice = productData.price;
+    document.querySelector(".product_amount").innerHTML = 1;
     document.querySelector('.product_img1').src = productData.image;
     document.querySelector('.product_img2').src = productData.image;
     document.querySelector('.product_name').innerHTML = productData.name;
@@ -53,11 +54,11 @@ fetch(`http://34.22.74.213:5000/api/product/${link}`, { credential: 'omit' })
   .then(() => {
         /*-----비즈니스로직------*/
     /** 수량조절 */
+    const productAmountNum = document.querySelector(".product_amount");
+    /** 수량표기 p태그 안 숫자 */
+    let num = parseInt(productAmountNum.innerHTML);
     function countDown() {
       /** 수량 표기 p태그 */
-      const productAmountNum = document.querySelector(".product_amount");
-      /** 수량표기 p태그 안 숫자 */
-      let num = parseInt(productAmountNum.innerHTML);
       // 0 이하로 내려가지 않게 설정
       if (num <= 1) return alert('최소 수량은 1개입니다.');
       num -= 1;
@@ -67,8 +68,6 @@ fetch(`http://34.22.74.213:5000/api/product/${link}`, { credential: 'omit' })
     }
 
     function countUp() {
-      const productAmountNum = document.querySelector(".product_amount");
-      let num = parseInt(productAmountNum.innerHTML);
       num += 1;
       productAmountNum.innerText = num;
       totalPrice = totalPrice + productPrice;
@@ -86,17 +85,100 @@ fetch(`http://34.22.74.213:5000/api/product/${link}`, { credential: 'omit' })
 
 
     /**장바구니에 추기*/
-    const addToCart = function (productId, amount) {
-      const cartItemInfo = { product_id: productId, amount: amount };
-      cartValidate(cartItemInfo)
-        .then(result => {   // 중복물건이 없는 경우
-          const confirmed = confirm(`${result} /n 장바구니 페이지로 이동하시겠습니까?`);
-          if (confirmed) {
-            window.location.href = `http://localhost:3000/cart`;
-          }
-        })
-        .catch(error => alert(error)); // 중복물건이 있는 경우
+    /* const cartInfo = {
+        "product_id": productId,
+        "amount": num,
+        "total_price": totalPrice,  
+      }
+      localStorage.setItem('productId', JSON.stringify(cartInfo));
+    */
+    // localStrorage.setItem(productId, cartInfo);
+    // 여기에는 string으로만 저장 -> JSON.stringify로 변환해줘야 함
+    // [예시] const myObj = { name: 'John', age: 30 };
+    // localStorage.setItem('myKey', JSON.stringify(myObj));
+
+    // // To retrieve the object: 빋을때도 JSON.parse로 변환해야 객체로 사용 가능.
+    // const storedObj = JSON.parse(localStorage.getItem('myKey'));
+    // console.log(storedObj); // Output: { name: 'John', age: 30 }
+
+    const addToCart = function() {
+      const cartInfo = {
+        "product_id": productId,
+        "amount": num,
+        "total_price": totalPrice,  
+      }
+      localStorage.setItem('productId', JSON.stringify(cartInfo));
     }
+
+
+    // const addToCart = function (productId, amount) {
+    //   const cartItemInfo = { product_id: productId, amount: amount };
+    //   cartValidate(cartItemInfo)
+    //     .then(result => {   // 중복물건이 없는 경우
+    //       const confirmed = confirm(`${result} /n 장바구니 페이지로 이동하시겠습니까?`);
+    //       if (confirmed) {
+    //         window.location.href = `http://localhost:3000/cart`;
+    //       }
+    //     })
+    //     .catch(error => alert(error)); // 중복물건이 있는 경우
+    // }
+
+/*--유빈님 작업--*/
+// 비즈니스로직
+/**장바구니에 추기*/
+const addToCart = function (productId, amount) {
+  const cartItemInfo = { product_id: productId, amount: amount };
+  cartValidate(cartItemInfo)
+    .then(result => {   // 중복물건이 없는 경우
+      const confirmed = confirm(`${result}`);
+      if (confirmed) {
+        window.location.href = `http://localhost:3000/cart`;
+      }
+    })
+    .catch(error => alert(error)); // 중복물건이 있는 경우
+}
+
+/**장바구니 중복여부 검증*/
+function cartValidate(item) {
+  const cartItemId = item.product_id;
+  return new Promise((resolve, reject) => {
+    const isCartItemExist = localStorage.getItem(cartItemId);
+    if (isCartItemExist === null) {
+      //장바구니에 이 상품이 존재하지 않으면~
+      localStorage.setItem(cartItemId, JSON.stringify(item));
+      resolve('장바구니에 성공적으로 추가되었습니다. 페이지에서 확인하시겠습니까?');
+    } else {
+      reject('이미 장바구니에 담겨있습니다.');
+    }
+  });
+}
+
+/*--구매하기--*/
+function buyProduct(item) {
+  const data = []
+  const amountNum = document.querySelector('.product_amount').innerHTML;
+  const url = window.location.href;
+  const productId = url.split('product/')[1].slice(0, -1);
+  console.log(productId)
+  data.push({ product_id: productId, amount: amountNum });
+
+  fetch('/api/orders', {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      confirm(`주문이 완료되었습니다.`);
+      window.location.href = `http://localhost:3000/ordercheck`;
+
+    })
+    .catch(error => console.error(error));
+}
+/*---유빈님 작업---*/
+
 
     /**장바구니 중복여부 검증*/
     function cartValidate(item) {
