@@ -39,9 +39,6 @@ fetch(`http://34.64.92.127:5000/api/product/${link}`, { credential: false })
      *  이제 바깥에서도 "productData.속성"을 사용할 수 있다.
      */
     productData = json;
-    productId = productData.product_id;
-    console.log(json);
-
     document.querySelector('.product_img1').src = productData.image;
     document.querySelector('.product_img2').src = productData.image;
     document.querySelector('.product_name').innerHTML = productData.name;
@@ -51,6 +48,20 @@ fetch(`http://34.64.92.127:5000/api/product/${link}`, { credential: false })
   })
 
 /**장바구니 중복여부 검증*/
+/**장바구니에 추기*/
+
+const addToCart = function (item) {
+  const cartItemInfo = item;
+  cartValidate(cartItemInfo)
+    .then(result => {   // 중복물건이 없는 경우
+      const confirmed = confirm(`${result}`);
+      if (confirmed) {
+        window.location.href = `http://localhost:3000/cart`;
+      }
+    })
+    .catch(error => alert(error)); // 중복물건이 있는 경우
+}
+
 function cartValidate(item) {
   const cartItemId = item.product_id;
   return new Promise((resolve, reject) => {
@@ -90,10 +101,34 @@ function buyProduct(item) {
 }
 
 
+/** 수량조절 */
+function countDown() {
+  /** 수량 표기 p태그 */
+  const productAmountNum = document.querySelector(".product_amount");
+  /** 수량표기 p태그 안 숫자 */
+  let num = parseInt(productAmountNum.innerHTML);
+  // 0 이하로 내려가지 않게 설정
+  if (num <= 1) return alert('최소 수량은 1개입니다.');
+  num -= 1;
+  productAmountNum.innerText = num;
+  totalPrice = totalPrice - productPrice;
+  document.querySelector('.total_price').innerHTML = "KRW " + addCommas(totalPrice);
+}
 
+function countUp() {
+  const productAmountNum = document.querySelector(".product_amount");
+  let num = parseInt(productAmountNum.innerHTML);
+  num += 1;
+  productAmountNum.innerText = num;
+  totalPrice = totalPrice + productPrice;
+  document.querySelector('.total_price').innerHTML = "KRW " + addCommas(totalPrice);
+}
 /*--버튼클릭시--*/
-// const changeBtn = document.querySelector('.amount_done');
-// changeBtn.addEventListener('click', setAmount);
+const minusBtn = document.querySelector('.cart_product_amount_count_minus');
+minusBtn.addEventListener('click', countDown);
+
+const plusBtn = document.querySelector('.cart_product_amount_count_plus');
+plusBtn.addEventListener('click', countUp);
 
 /**장바구니에서 최대한 서버와의 통신을 줄이기 위해 상품정보를 모두 보냈습니다*/
 const addCartBtn = document.querySelector('.add_cart_btn');
