@@ -52,13 +52,13 @@ fetch(`http://34.22.74.213:5000/api/product/${link}`, { credential: 'omit' })
     document.querySelector('.total_price').innerHTML = "KRW " + addCommas(totalPrice);
   })
   .then(() => {
-        /*-----비즈니스로직------*/
+    /*-----비즈니스로직------*/
     /** 수량조절 */
+     /** 수량 표기 p태그 */
     const productAmountNum = document.querySelector(".product_amount");
     /** 수량표기 p태그 안 숫자 */
     let num = parseInt(productAmountNum.innerHTML);
     function countDown() {
-      /** 수량 표기 p태그 */
       // 0 이하로 내려가지 않게 설정
       if (num <= 1) return alert('최소 수량은 1개입니다.');
       num -= 1;
@@ -74,84 +74,39 @@ fetch(`http://34.22.74.213:5000/api/product/${link}`, { credential: 'omit' })
       document.querySelector('.total_price').innerHTML = "KRW " + addCommas(totalPrice);
     }
 
-    /**수량결정*/
-
-    // setAmount는 Add to cart 버튼에 통합시킬 수 있을듯 (+setPrice)
-    // function setAmount(data) {
-    //   const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
-    //   cartItems.push(data);
-    //   localStorage.setItem("cart", JSON.stringify(cartItems));
-    // }
-
+    /**장바구니 중복여부 검증*/
+    function cartValidate(cartInfo) {
+        return new Promise((resolve, reject) => {
+        const isCartItemExist = localStorage.getItem(productId);
+        if (isCartItemExist === null) {
+          //장바구니에 이 상품이 존재하지 않으면~
+          localStorage.setItem(productId, JSON.stringify(cartInfo));
+          resolve('장바구니에 성공적으로 추가되었습니다.');
+        } else {
+          reject('이미 장바구니에 담겨있습니다.');
+        }
+      });
+    }
 
     /**장바구니에 추기*/
-    /* const cartInfo = {
-        "product_id": productId,
-        "amount": num,
-        "total_price": totalPrice,  
-      }
-      localStorage.setItem('productId', JSON.stringify(cartInfo));
-    */
-    // localStrorage.setItem(productId, cartInfo);
-    // 여기에는 string으로만 저장 -> JSON.stringify로 변환해줘야 함
-    // [예시] const myObj = { name: 'John', age: 30 };
-    // localStorage.setItem('myKey', JSON.stringify(myObj));
-
-    // // To retrieve the object: 빋을때도 JSON.parse로 변환해야 객체로 사용 가능.
-    // const storedObj = JSON.parse(localStorage.getItem('myKey'));
-    // console.log(storedObj); // Output: { name: 'John', age: 30 }
-
     const addToCart = function() {
       const cartInfo = {
         "product_id": productId,
         "amount": num,
         "total_price": totalPrice,  
       }
-      localStorage.setItem('productId', JSON.stringify(cartInfo));
+      cartValidate(cartInfo)
+      .then(result => {   // 중복물건이 없는 경우
+        const confirmed = confirm(`${result} 장바구니 페이지로 이동하시겠습니까?`);
+        if (confirmed) {
+          window.location.href = `http://localhost:3000/cart`;
+        }
+      })
+      .catch(error => alert(error)); // 중복물건이 있는 경우
     }
-
-
-    // const addToCart = function (productId, amount) {
-    //   const cartItemInfo = { product_id: productId, amount: amount };
-    //   cartValidate(cartItemInfo)
-    //     .then(result => {   // 중복물건이 없는 경우
-    //       const confirmed = confirm(`${result} /n 장바구니 페이지로 이동하시겠습니까?`);
-    //       if (confirmed) {
-    //         window.location.href = `http://localhost:3000/cart`;
-    //       }
-    //     })
-    //     .catch(error => alert(error)); // 중복물건이 있는 경우
-    // }
 
 /*--유빈님 작업--*/
 // 비즈니스로직
-/**장바구니에 추기*/
-const addToCart = function (productId, amount) {
-  const cartItemInfo = { product_id: productId, amount: amount };
-  cartValidate(cartItemInfo)
-    .then(result => {   // 중복물건이 없는 경우
-      const confirmed = confirm(`${result}`);
-      if (confirmed) {
-        window.location.href = `http://localhost:3000/cart`;
-      }
-    })
-    .catch(error => alert(error)); // 중복물건이 있는 경우
-}
-
-/**장바구니 중복여부 검증*/
-function cartValidate(item) {
-  const cartItemId = item.product_id;
-  return new Promise((resolve, reject) => {
-    const isCartItemExist = localStorage.getItem(cartItemId);
-    if (isCartItemExist === null) {
-      //장바구니에 이 상품이 존재하지 않으면~
-      localStorage.setItem(cartItemId, JSON.stringify(item));
-      resolve('장바구니에 성공적으로 추가되었습니다. 페이지에서 확인하시겠습니까?');
-    } else {
-      reject('이미 장바구니에 담겨있습니다.');
-    }
-  });
-}
 
 /*--구매하기--*/
 function buyProduct(item) {
@@ -177,50 +132,6 @@ function buyProduct(item) {
     })
     .catch(error => console.error(error));
 }
-/*---유빈님 작업---*/
-
-
-    /**장바구니 중복여부 검증*/
-    function cartValidate(item) {
-      const cartItemId = item.product_id;
-      return new Promise((resolve, reject) => {
-        const isCartItemExist = localStorage.getItem(cartItemId);
-        if (isCartItemExist !== null) {
-          reject('이미 장바구니에 담겨있습니다.');
-        } else {
-          localStorage.setItem(cartItemId, JSON.stringify(item));
-          resolve('장바구니에 성공적으로 추가되었습니다. 페이지에서 확인하시겠습니까?');
-        }
-      });
-    }
-
-    /*--구매하기--*/
-    function buyProduct(item) {
-      const amountNum = document.querySelector('.product_amount').innerHTML;
-      const data = { product_id: item.product_id, amount: amountNum };
-
-      fetch('http://localhost:5000/api/orders', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-        .then(response => response.json())
-        .then(data => {
-          confirm(`주문이 완료되었습니다.`);
-          window.location.href = `http://localhost:3000/ordercheck`;
-
-        })
-        .catch(error => console.error(error));
-    }
-    // Promise 객체를 생성하고
-    // localStorage에 cartItemId가 있는지 없는지 확인한다
-    // cartItemId값이 null이 아닌 경우 중복물건이 존재한다는 것을 의미함
-    // 중복물건이 없는 경우 localStorage에 data 추가
-
-
-
 
     /*--버튼클릭시--*/
     const minusBtn = document.querySelector('.cart_product_amount_count_minus');
