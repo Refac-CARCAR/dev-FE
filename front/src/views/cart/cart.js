@@ -3,8 +3,14 @@
   detail 페이지에서 localStorage.setItem()할때 우루루 넣어야 했다.
   필요한 데이터는 무엇인가?
   대표이미지, 상품이름, 상품금액, 수량, 총액
-
-
+   const cartInfo = {
+        "product_id": productId,
+        "amount": num,
+        "total_price": totalPrice,
+        "product_name": productName,
+        "product_image": productImage,
+        "product_price": productPrice  
+      }
 */
 
 // 숫자에 쉼표를 추가함. (10000 -> 10,000)

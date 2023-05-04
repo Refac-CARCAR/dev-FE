@@ -1,12 +1,7 @@
+// 계속 중복되는 함수들은 다른 파일에 정리해서 import 하는 방식도 좋을 듯(코드를 더럽히는...)
 // 숫자에 쉼표를 추가함. (10000 -> 10,000)
 const addCommas = n => {
   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-};
-
-// 13,000원, 2개 등의 문자열에서 쉼표, 글자 등 제외 후 숫자만 뺴냄
-// 예시: 13,000원 -> 13000, 20,000개 -> 20000
-const convertToNumber = string => {
-  return parseInt(string.replace(/(,|개|원)/g, ''));
 };
 
 /* ------------- */
@@ -25,25 +20,26 @@ $('.carousel').slick({
 // fetch 함수에서만 쓰이므로 fetch 지역변수로 써도 될 것 같은데??
 // let productData = [];
 /** 다양한 함수에서 활용되므로 전역변수로 선언 (그런데 let? 다른 상품일 경우 바뀌어야해서!)*/
-let productId;
-let totalPrice;
-let productPrice;
-let productImage;
-let productName;
+// fetch로만 받고 해결할 것이 아니라 이후 연동할 부분이 많아서 전역변수로 선언
+let productId, totalPrice, productPrice, productImage, productName;
 
 /** url에서 얻어온 product_id */
 const link = document.location.href.split('/')[4];
 
 fetch(`http://34.22.74.213:5000/api/product/${link}`, { credential: 'omit' })
   .then(res => {
+    console.log(res);
     return res.json();
   })
   .then((json) => {
     const productData = json;
+    // localStorage에 저장할 정보들은 전역변수에 할당
     productId = productData.product_id;
     totalPrice = productData.price;
     productPrice = productData.price;
     productImage = productData.image;
+    productName = productData.name;
+    // 페이지에 그리기
     document.querySelector(".product_amount").innerHTML = 1;
     document.querySelector('.product_img1').src = productData.image;
     document.querySelector('.product_img2').src = productData.image;
@@ -51,7 +47,6 @@ fetch(`http://34.22.74.213:5000/api/product/${link}`, { credential: 'omit' })
     document.querySelector('.product_price').innerHTML = "KRW " + addCommas(productData.price);
     document.querySelector('.main_description').innerHTML = productData.description;
     document.querySelector('.maker').innerHTML = "제조사 _ " + productData.maker;
-    // TOTAL PRICE 
     document.querySelector('.total_price').innerHTML = "KRW " + addCommas(totalPrice);
   })
   .then(() => {
@@ -79,10 +74,12 @@ fetch(`http://34.22.74.213:5000/api/product/${link}`, { credential: 'omit' })
 
     /**장바구니 중복여부 검증*/
     function cartValidate(cartInfo) {
-        return new Promise((resolve, reject) => {
-        const isCartItemExist = localStorage.getItem(productId);
+        return new Promise((resolve, reject) => { 
+          // productId가 아닌 cartItems로 한 뒤 
+        const isCartItemExist = localStorage.getItem('productId');
         if (isCartItemExist === null) {
           //장바구니에 이 상품이 존재하지 않으면~
+          // cartInfo 값을 배열안에 key와 값으로 이루어진 객체를 구성해야할 듯... 내일 와서 해보겠습니다
           localStorage.setItem(productId, JSON.stringify(cartInfo));
           resolve('장바구니에 성공적으로 추가되었습니다.');
         } else {
@@ -96,7 +93,10 @@ fetch(`http://34.22.74.213:5000/api/product/${link}`, { credential: 'omit' })
       const cartInfo = {
         "product_id": productId,
         "amount": num,
-        "total_price": totalPrice,  
+        "total_price": totalPrice,
+        "product_name": productName,
+        "product_image": productImage,
+        "product_price": productPrice  
       }
       cartValidate(cartInfo)
       .then(result => {   // 중복물건이 없는 경우
