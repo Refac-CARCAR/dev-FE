@@ -21,6 +21,7 @@ function serveStatic(resource, dir = '', pathParam = null) {
 viewsRouter.use('/', serveStatic('main'));
 viewsRouter.use('/product-list', serveStatic('product-list', '/product'));
 viewsRouter.use('/product/:id', serveStatic('product-detail', '/product', 'id'));
+viewsRouter.use('/cart', serveStatic('cart'));
 //라우터를 추가하였습니다.
 
 export default viewsRouter;

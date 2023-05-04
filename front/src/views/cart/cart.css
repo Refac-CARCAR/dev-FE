@@ -316,3 +316,10 @@ a {
   font-size: 16px;
   line-height: 19px;
 }
+
+
+.cart_product_amount input{
+  width: 20px;
+  height: 20px;
+  margin:0;
+}
