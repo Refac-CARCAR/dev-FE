@@ -1,94 +1,24 @@
-if (
-  currentToken ===
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDQ5ZDNhOGMyZDFmNzgxYzVlZDIxZTciLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2ODI2OTc2MjR9.J2Z7Slgjqo_VWl66qn0aGLY-l0ejJ25nhuBtSCU90ZA'
-) {
-  goToMypage.addEventListener('click', () => {
-    window.location.href = '/user-management';
-  });
-} else {
-  goToMypage.addEventListener('click', () => {
-    window.location.href = '/mypage';
-  });
-}
+/* 모든 데이터를 프론트에서 처리해야한다
+  localStorage에 cart 페이지에서 표현할 data를 모두 저장해야 한다.
+  detail 페이지에서 localStorage.setItem()할때 우루루 넣어야 했다.
+  필요한 데이터는 무엇인가?
+  대표이미지, 상품이름, 상품금액, 수량, 총액
 
-// 이메일 형식인지 확인 (true 혹은 false 반환)
-const validateEmail = email => {
-  return String(email)
-    .toLowerCase()
-    .match(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-    );
-};
+
+*/
 
 // 숫자에 쉼표를 추가함. (10000 -> 10,000)
 const addCommas = n => {
   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
-// 13,000원, 2개 등의 문자열에서 쉼표, 글자 등 제외 후 숫자만 뺴냄
-// 예시: 13,000원 -> 13000, 20,000개 -> 20000
-const convertToNumber = string => {
-  return parseInt(string.replace(/(,|개|원)/g, ''));
-};
-
-// ms만큼 기다리게 함.
-const wait = ms => {
-  return new Promise(r => setTimeout(r, ms));
-};
-
-// 실제 연결할 떈 필요없는 코드(mockdata)
-localStorage.removeItem('cart');
-const data1 = {
-  productId: 'dsgkwn1234',
-  amount: 3,
-  price: 60000,
-  image: 'http://via.placeholder.com/640x360',
-  name: 'G90',
-  brand: '현대',
-  desc: '좋은차',
-};
-const data2 = {
-  productId: 'vgp21nkl3n1',
-  amount: 10,
-  price: 40000,
-  image: 'http://via.placeholder.com/640x360',
-  brand: '현대',
-  name: '소나타',
-  desc: '좋은차',
-};
-const data3 = {
-  productId: 'lkvn1p2n',
-  amount: 9,
-  price: 500,
-  image: 'http://via.placeholder.com/640x360',
-  brand: '현대',
-  name: 'G80',
-  desc: '좋은차',
-};
-const data4 = {
-  productId: '32n1ovn32n',
-  amount: 1,
-  price: 60000,
-  image: 'http://via.placeholder.com/640x360',
-  brand: '현대',
-  name: '싼타페',
-  desc: '좋은차',
-};
-function addToCart(data) {
-  const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-  cartItems.push(data);
-  localStorage.setItem('cart', JSON.stringify(cartItems));
-}
-addToCart(data1);
-addToCart(data2);
-addToCart(data3);
-addToCart(data4);
-
 // 처음 페이지가 꾸려질 때 localStorage에 저장된 값을 가져온다.
-const products = JSON.parse(localStorage.getItem('cart')) || [];
+const products = JSON.parse(localStorage.getItem('productId')) || [];
+console.log(products);
 
 // 서버랑 통신할 필요없이 localStorage에 저장된 값을 불러와서 작성
-const carts = data => {
+const itemsInCart = data => {
+  /** ? */
   let html = '';
   for (let product of data) {
     html += `
@@ -303,18 +233,25 @@ $paymentBtn.addEventListener('click', e => {
     });
 });
 
-const goToMypage = document.querySelector('#goToMypage');
-const currentToken = localStorage.getItem('token');
 
-if (
-  currentToken ===
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDQ5ZDNhOGMyZDFmNzgxYzVlZDIxZTciLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2ODI2OTc2MjR9.J2Z7Slgjqo_VWl66qn0aGLY-l0ejJ25nhuBtSCU90ZA'
-) {
-  goToMypage.addEventListener('click', () => {
-    window.location.href = '/user-management';
-  });
-} else {
-  goToMypage.addEventListener('click', () => {
-    window.location.href = '/mypage';
-  });
-}
+
+
+
+
+
+
+// const goToMypage = document.querySelector('#goToMypage');
+// const currentToken = localStorage.getItem('token');
+
+// if (
+//   currentToken ===
+//   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDQ5ZDNhOGMyZDFmNzgxYzVlZDIxZTciLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2ODI2OTc2MjR9.J2Z7Slgjqo_VWl66qn0aGLY-l0ejJ25nhuBtSCU90ZA'
+// ) {
+//   goToMypage.addEventListener('click', () => {
+//     window.location.href = '/user-management';
+//   });
+// } else {
+//   goToMypage.addEventListener('click', () => {
+//     window.location.href = '/mypage';
+//   });
+// }

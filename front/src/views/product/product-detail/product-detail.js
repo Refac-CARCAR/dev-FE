@@ -28,6 +28,8 @@ $('.carousel').slick({
 let productId;
 let totalPrice;
 let productPrice;
+let productImage;
+let productName;
 
 /** url에서 얻어온 product_id */
 const link = document.location.href.split('/')[4];
@@ -41,6 +43,7 @@ fetch(`http://34.22.74.213:5000/api/product/${link}`, { credential: 'omit' })
     productId = productData.product_id;
     totalPrice = productData.price;
     productPrice = productData.price;
+    productImage = productData.image;
     document.querySelector(".product_amount").innerHTML = 1;
     document.querySelector('.product_img1').src = productData.image;
     document.querySelector('.product_img2').src = productData.image;
