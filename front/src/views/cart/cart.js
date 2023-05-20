@@ -36,54 +36,6 @@ const wait = ms => {
   return new Promise(r => setTimeout(r, ms));
 };
 
-// 실제 연결할 떈 필요없는 코드(mockdata)
-localStorage.removeItem('cart');
-const data1 = {
-  productId: 'dsgkwn1234',
-  amount: 3,
-  price: 60000,
-  image: 'http://via.placeholder.com/640x360',
-  name: 'G90',
-  brand: '현대',
-  desc: '좋은차',
-};
-const data2 = {
-  productId: 'vgp21nkl3n1',
-  amount: 10,
-  price: 40000,
-  image: 'http://via.placeholder.com/640x360',
-  brand: '현대',
-  name: '소나타',
-  desc: '좋은차',
-};
-const data3 = {
-  productId: 'lkvn1p2n',
-  amount: 9,
-  price: 500,
-  image: 'http://via.placeholder.com/640x360',
-  brand: '현대',
-  name: 'G80',
-  desc: '좋은차',
-};
-const data4 = {
-  productId: '32n1ovn32n',
-  amount: 1,
-  price: 60000,
-  image: 'http://via.placeholder.com/640x360',
-  brand: '현대',
-  name: '싼타페',
-  desc: '좋은차',
-};
-function addToCart(data) {
-  const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-  cartItems.push(data);
-  localStorage.setItem('cart', JSON.stringify(cartItems));
-}
-addToCart(data1);
-addToCart(data2);
-addToCart(data3);
-addToCart(data4);
-
 // 처음 페이지가 꾸려질 때 localStorage에 저장된 값을 가져온다.
 const products = JSON.parse(localStorage.getItem('cart')) || [];
 
@@ -288,7 +240,7 @@ $paymentBtn.addEventListener('click', e => {
     }
   });
 
-  fetch('https://example.com/api/payment', {
+  fetch('http://34.64.92.127:5000/api/order', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -302,6 +254,43 @@ $paymentBtn.addEventListener('click', e => {
       // fetch 요청 처리 중 에러가 발생했을 때의 코드
     });
 });
+
+/** 수량조절 */
+function countDown() {
+  /** 수량 표기 p태그 */
+  const productAmountNum = document.querySelector(".product_amount");
+  /** 수량표기 p태그 안 숫자 */
+  let num = parseInt(productAmountNum.innerHTML);
+  // 0 이하로 내려가지 않게 설정
+  if (num <= 1) return alert('최소 수량은 1개입니다.');
+  num -= 1;
+  productAmountNum.innerText = num;
+  totalPrice = totalPrice - productPrice;
+  document.querySelector('.total_price').innerHTML = "KRW " + addCommas(totalPrice);
+}
+function countUp() {
+  const productAmountNum = document.querySelector(".product_amount");
+  let num = parseInt(productAmountNum.innerHTML);
+  num += 1;
+  productAmountNum.innerText = num;
+  totalPrice = totalPrice + productPrice;
+  document.querySelector('.total_price').innerHTML = "KRW " + addCommas(totalPrice);
+}
+/*--버튼클릭시--*/
+const minusBtn = document.querySelector('.cart_product_amount_count_minus');
+minusBtn.addEventListener('click', countDown);
+
+const plusBtn = document.querySelector('.cart_product_amount_count_plus');
+plusBtn.addEventListener('click', countUp);
+
+
+
+
+
+
+
+
+
 
 const goToMypage = document.querySelector('#goToMypage');
 const currentToken = localStorage.getItem('token');
